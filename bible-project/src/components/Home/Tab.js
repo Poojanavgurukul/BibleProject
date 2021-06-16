@@ -7,6 +7,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
+import LanguageContextProvider from '../../contexts/language';
 
 import { makeStyles } from '@material-ui/core/styles';
 import LanguageTable from '../Language/languageTable';
@@ -79,7 +80,9 @@ export default function VerticalTabs() {
         <Tab icon={<ArtTrackIcon />} label="Project" {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
+        <LanguageContextProvider>
           <LanguageTable />
+        </LanguageContextProvider>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
