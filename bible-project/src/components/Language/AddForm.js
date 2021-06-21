@@ -4,8 +4,8 @@ import { CommonContext } from "../../contexts/commonContext";
 import { LanguageContext } from "../../contexts/language";
 
  const AddForm = () => {
-  const {data,history} = useContext(LanguageContext);
-  const {classes,handleClick} = useContext(CommonContext);
+  const {data} = useContext(LanguageContext);
+  const {classes,handleClick,history} = useContext(CommonContext);
   const [name,setName] = useState('');
   const [code,setCode] = useState('');
   const [direction,setDirection] = useState('');

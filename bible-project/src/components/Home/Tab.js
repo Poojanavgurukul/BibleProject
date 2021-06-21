@@ -11,6 +11,8 @@ import LanguageContextProvider from '../../contexts/language';
 
 import { makeStyles } from '@material-ui/core/styles';
 import LanguageTable from '../Language/languageTable';
+import VersionContextProvider from '../../contexts/version';
+import Table from '../Version/table';
 
 
 function TabPanel(props) {
@@ -85,7 +87,9 @@ export default function VerticalTabs() {
         </LanguageContextProvider>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <VersionContextProvider>
+          <Table />
+        </VersionContextProvider>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three

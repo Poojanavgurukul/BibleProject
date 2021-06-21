@@ -7,32 +7,21 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
-import Alert from '../common/Alert'
-import ResponsiveDialog from './DialogLanguageAdd';
-import ResponsiveDialogBox from './upDateDialog';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Alert from '../common/Alert';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { LanguageContext } from '../../contexts/language';
+import { VersionContext } from '../../contexts/version';
 import { CommonContext } from '../../contexts/commonContext';
+import ResponsiveDialog from '../Version/DialogVersionAdd';
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    minWidth: 650,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
-
-const LanguageTable = () => {
-   const classes = useStyles();
-   const { isLoading,error,data } = useContext(LanguageContext)
-   const {setOpen,setMessage,handleClicked,handleClickedBox,history} = useContext(CommonContext);
-   const handleDelete=(id,message)=>{
-      fetch(`http://localhost:8000/language/${id}`,{
+const TableVersion = () => {
+    const {isLoading,error,data} = useContext(VersionContext);
+    const {classes,handleClicked,setMessage,history,setOpen} = useContext(CommonContext);
+    if (isLoading) return 'Loading...'
+    if (error) return 'An error has occurred: ' + error.message
+    const handleDelete=(id,message)=>{
+      fetch(`http://localhost:3030/version/${id}`,{
         method:'DELETE'
       }).then(()=>{
         history.push('/')
@@ -40,10 +29,7 @@ const LanguageTable = () => {
       setOpen(true);
       setMessage(message);
    }
-   
-   if (isLoading) return 'Loading...'
-   if (error) return 'An error has occurred: ' + error.message
-    return (
+    return ( 
         <div>
         <Button
           onClick={handleClicked}
@@ -59,12 +45,10 @@ const LanguageTable = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Language Id</TableCell>
-              <TableCell>Language Name</TableCell>
-              <TableCell>Language Code</TableCell>
-              <TableCell>Direction To Read</TableCell>
-              <TableCell>Delete</TableCell>
-              <TableCell>Edit</TableCell>
+              <TableCell>Version Id</TableCell>
+              <TableCell>Version Name</TableCell>
+              <TableCell>Version Code</TableCell>
+              <TableCell>Revision</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,7 +59,7 @@ const LanguageTable = () => {
                 </TableCell>
                 <TableCell>{element.name}</TableCell>
                 <TableCell>{element.code}</TableCell>
-                <TableCell>{element.direction}</TableCell>
+                <TableCell>{element.revision}</TableCell>
                 <TableCell>
                   <Button
                     onClick={()=>handleDelete(element.id,'Deleted SuccesFuly!!')}
@@ -87,7 +71,7 @@ const LanguageTable = () => {
                     Delete
                   </Button>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Button
                     onClick={()=>handleClickedBox(element.id)}
                     variant="contained"
@@ -97,16 +81,15 @@ const LanguageTable = () => {
                   >
                     Edit
                   </Button>
-                  <ResponsiveDialogBox />
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <Alert />
-      </div>
+    </div>
      );
 }
  
-export default LanguageTable;
+export default TableVersion;

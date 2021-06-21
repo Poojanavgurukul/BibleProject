@@ -1,7 +1,5 @@
 import { createContext } from "react";
 import { useQuery } from 'react-query';
-import { useHistory } from "react-router-dom";
-
 
 export const LanguageContext = createContext();
 const LanguageContextProvider = (props) => {
@@ -10,10 +8,8 @@ const LanguageContextProvider = (props) => {
        res.json()
      )
    )
-   const history = useHistory()
-
     return ( 
-        <LanguageContext.Provider value={{isLoading,error,data,history}}>
+        <LanguageContext.Provider value={{isLoading,error,data}}>
             {props.children}
         </LanguageContext.Provider>
      );
