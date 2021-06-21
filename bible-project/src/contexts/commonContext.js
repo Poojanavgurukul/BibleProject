@@ -25,6 +25,9 @@ export const CommonContext = createContext();
 const CommonContextProvider = (props) => {
     const [open, setOpen] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
+    const [id,setId] = useState(null);
+    const [openDialogBox, setOpenDialogBox] = useState(false);
+
     const [message,setMessage] = useState('')
     const classes = useStyles();
 
@@ -35,7 +38,11 @@ const CommonContextProvider = (props) => {
     const handleClicked = () => {
         setOpenDialog(true);
     };
-        
+    const handleClickedBox = (id) => {
+        setId(id)
+        setOpenDialogBox(true);
+    };
+     
     return ( 
         <CommonContext.Provider value={
             {
@@ -47,7 +54,11 @@ const CommonContextProvider = (props) => {
                 setMessage,
                 handleClick,
                 handleClicked,
-                classes
+                classes,
+                openDialogBox,
+                handleClickedBox,
+                setOpenDialogBox,
+                id
             }
             }>
             {props.children}

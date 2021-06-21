@@ -8,9 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import Alert from '../common/Alert'
 import ResponsiveDialog from './DialogLanguageAdd';
+import ResponsiveDialogBox from './upDateDialog';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { LanguageContext } from '../../contexts/language';
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const LanguageTable = () => {
    const classes = useStyles();
    const { isLoading,error,data,history } = useContext(LanguageContext)
-   const {setOpen,setMessage,handleClicked} = useContext(CommonContext);
+   const {setOpen,setMessage,handleClicked,handleClickedBox} = useContext(CommonContext);
    const handleDelete=(id,message)=>{
       fetch(`http://localhost:8000/language/${id}`,{
         method:'DELETE'
@@ -38,7 +40,7 @@ const LanguageTable = () => {
       setOpen(true);
       setMessage(message);
    }
-  
+   
    if (isLoading) return 'Loading...'
    if (error) return 'An error has occurred: ' + error.message
     return (
@@ -62,20 +64,21 @@ const LanguageTable = () => {
               <TableCell>Language Code</TableCell>
               <TableCell>Direction To Read</TableCell>
               <TableCell>Delete</TableCell>
+              <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((language,index) => (
+            {data.map((element,index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {language.id}
+                  {element.id}
                 </TableCell>
-                <TableCell>{language.name}</TableCell>
-                <TableCell>{language.code}</TableCell>
-                <TableCell>{language.direction}</TableCell>
+                <TableCell>{element.name}</TableCell>
+                <TableCell>{element.code}</TableCell>
+                <TableCell>{element.direction}</TableCell>
                 <TableCell>
                   <Button
-                    onClick={()=>handleDelete(language.id,'Deleted SuccesFuly!!')}
+                    onClick={()=>handleDelete(element.id,'Deleted SuccesFuly!!')}
                     variant="contained"
                     color="secondary"
                     className={classes.button}
@@ -83,6 +86,18 @@ const LanguageTable = () => {
                   >
                     Delete
                   </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={()=>handleClickedBox(element.id)}
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<EditIcon />}
+                  >
+                    Edit
+                  </Button>
+                  <ResponsiveDialogBox />
                 </TableCell>
               </TableRow>
             ))}
