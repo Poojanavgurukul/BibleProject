@@ -1,11 +1,19 @@
 import { createContext } from "react";
-import useFetch from "../customHook/useFetch";
+import { useQuery } from 'react-query';
+import { useHistory } from "react-router-dom";
+
 
 export const LanguageContext = createContext();
 const LanguageContextProvider = (props) => {
-    const { data:languageData } = useFetch("http://localhost:8000/language")
+    const { isLoading, error, data } = useQuery('languageData', () =>
+     fetch('http://localhost:8000/language').then(res =>
+       res.json()
+     )
+   )
+   const history = useHistory()
+
     return ( 
-        <LanguageContext.Provider value={{languageData}}>
+        <LanguageContext.Provider value={{isLoading,error,data,history}}>
             {props.children}
         </LanguageContext.Provider>
      );
