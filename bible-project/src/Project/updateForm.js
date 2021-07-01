@@ -9,7 +9,7 @@ import { CommonContext } from '../contexts/commonContext';
 import { BookContext } from '../contexts/book';
 
  const UpdateForm = () => {
-  const {classes,id} = useContext(CommonContext);
+  const {classes,id,handleClick} = useContext(CommonContext);
   const {isLoading,error,data:book} = useContext(BookContext)
   const [books,setBooks] = useState(book)
   const [name,setName] = useState('');
@@ -51,7 +51,6 @@ import { BookContext } from '../contexts/book';
   return ( 
     <div>
     <form className={classes.box} onSubmit={handleUpdate}>
-        {/* <button onClick={(e)=>handleClick("Version Updated SucessFuly!!!")} className={classes.addBtn}>Update</button> */}
         <label> Project Name </label>
                 <input  
                     disabled
@@ -96,7 +95,7 @@ import { BookContext } from '../contexts/book';
                   </Grid>
                 ))  }
               </Grid>
-          <button className={classes.addBtn} >Update</button>
+      <button onClick={(e)=>handleClick("Project Updated SucessFuly!!!")} className={classes.addBtn}>Update</button>
     </form>
     <Alert />
     </div>

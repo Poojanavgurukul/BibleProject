@@ -76,7 +76,7 @@
           "book": "Joshua",
           "bookId": 6,
           "abbreviation": "jos",
-          "status": false
+          "status": true
         },
         {
           "book": "Judges",
