@@ -5,17 +5,17 @@ import { CommonContext } from "../../contexts/commonContext";
  const UpdateForm = () => {
   const {classes,handleClick,id,history} = useContext(CommonContext);
   const [name,setName] = useState('');
-  const [code,setCode] = useState('');
   const [direction,setDirection] = useState('');
   
   const onHandleSubmit =() =>{
-    const language = {name,code,direction}
+    const language = {name,code:name.slice(0,3),direction}
     fetch(`http://localhost:8000/language/${id}`,{
       method:'PUT',
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(language)
     }).then(()=>{
       history.push('/')
+      window.location.reload()
     })
   }
 useEffect(() => {
@@ -23,7 +23,6 @@ useEffect(() => {
     .then(res => res.json())
     .then(data => {
         setName(data.name)
-        setCode(data.code)
         setDirection(data.direction)
     }, [])
 }, [id])
@@ -37,22 +36,17 @@ useEffect(() => {
             onChange={(e)=>setName(e.target.value)}
             required
           />
-          <label> Language Code </label>
-          <input 
-            type="text"
-            value={code}
-            className={classes.space}
-            onChange={(e)=>setCode(e.target.value)}
-            required
-          />
           <label> Direction To Read </label>
-          <input 
-            type="text"
+          <select 
             value={direction}
             className={classes.space}
-            onChange={(e)=>setDirection(e.target.value)}
             required
-          />
+            onChange={(e)=>setDirection(e.target.value)}
+             >
+            <option>Select</option>
+            <option>Left To Right</option>
+            <option>Right To Left</option>
+          </select>
         <button onClick={(e)=>handleClick("Language Updated SucessFuly!!!")} className={classes.addBtn}>Update</button>
     </form>
     <Alert />

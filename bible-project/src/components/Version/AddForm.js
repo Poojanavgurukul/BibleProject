@@ -4,19 +4,18 @@ import { CommonContext } from "../../contexts/commonContext";
 import { VersionContext } from '../../contexts/version';
 
 const AddForm = () => {
-    const {classes,handleClick,history} = useContext(CommonContext)
+    const {classes,handleClick} = useContext(CommonContext)
     const [name,setName] = useState('');
-    const [code,setCode] = useState('');
     const [revision,setRevision] = useState('');
     const {data} = useContext(VersionContext);
     const onHandleSubmit=()=>{
-        const version = {name,code,revision,id:data.length+1}
-        fetch('http://localhost:3030/version',{
+        const version = {name,code:name.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),revision,id:data.length+1}
+        fetch('http://localhost:8000/version',{
             method:'POST',
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(version)
         }).then(()=>{
-            history.push('/')
+            window.location.reload();
         })
     }
     return (  
@@ -29,17 +28,9 @@ const AddForm = () => {
                     value={name}
                     onChange={(e)=>setName(e.target.value)}
                 />
-                <label> Version Code </label>
-                <input 
-                    type="text"
-                    className={classes.space}
-                    required
-                    value={code}
-                    onChange={(e)=>setCode(e.target.value)}
-                />
                 <label>Revision</label>
                 <input 
-                    type="text"
+                    type="number"
                     className={classes.space}
                     required
                     value={revision}

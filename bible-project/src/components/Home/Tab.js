@@ -8,11 +8,16 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import LanguageContextProvider from '../../contexts/language';
-
-import { makeStyles } from '@material-ui/core/styles';
 import LanguageTable from '../Language/languageTable';
 import VersionContextProvider from '../../contexts/version';
 import Table from '../Version/table';
+import ProjectTable from '../../Project/table';
+import BookContextProvider from '../../contexts/book';
+import { makeStyles } from '@material-ui/core/styles';
+import BibleContextProvider from '../../contexts/bible';
+import BibleTable from '../Bible/BibleTable';
+import ProjectContextProvider from '../../contexts/project';
+
 
 
 function TabPanel(props) {
@@ -92,10 +97,20 @@ export default function VerticalTabs() {
         </VersionContextProvider>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <BibleContextProvider>
+          <LanguageContextProvider>
+            <VersionContextProvider>
+            <BibleTable />
+          </VersionContextProvider>
+          </LanguageContextProvider>
+        </BibleContextProvider>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <ProjectContextProvider>
+          <BookContextProvider>
+          <ProjectTable />
+          </BookContextProvider>
+        </ProjectContextProvider>
       </TabPanel>
     </div>
   );

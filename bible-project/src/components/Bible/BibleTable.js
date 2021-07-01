@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,18 +9,18 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ResponsiveDialog from './DialogAdd';
+import ResponsiveDialogBox from './updateDialog';
 import Alert from '../common/Alert';
-import ResponsiveDialogBox from '../Version/updateDialog';
-import ResponsiveDialog from '../Version/DialogVersionAdd';
-
-import { VersionContext } from '../../contexts/version';
+import { useContext } from 'react';
 import { CommonContext } from '../../contexts/commonContext';
-
-const TableVersion = () => {
-    const {isLoading,error,data} = useContext(VersionContext);
+import { BibleContext } from '../../contexts/bible';
+const BibleTable = () => {
     const {classes,handleClicked,setMessage,setOpen,handleClickedBox} = useContext(CommonContext);
+    const {isLoading,error,data} = useContext(BibleContext); 
+
     const handleDelete=(id,message)=>{
-      fetch(`http://localhost:8000/version/${id}`,{
+      fetch(`http://localhost:8000/bible/${id}`,{
         method:'DELETE'
       }).then(()=>{
         window.location.reload();
@@ -29,9 +28,9 @@ const TableVersion = () => {
       setOpen(true);
       setMessage(message);
    }
+
     if (isLoading) return 'Loading...'
     if (error) return 'An error has occurred: ' + error.message
-    
     return ( 
         <div>
         <Button
@@ -48,21 +47,21 @@ const TableVersion = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Version Id</TableCell>
+              <TableCell>Bible Id</TableCell>
+              <TableCell>Language Name</TableCell>
               <TableCell>Version Name</TableCell>
               <TableCell>Version Code</TableCell>
-              <TableCell>Revision</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((element,index) => (
-              <TableRow key={index}>
+            {data.map((element) => (
+              <TableRow key={element.id}>
                 <TableCell component="th" scope="row">
                   {element.id}
                 </TableCell>
-                <TableCell>{element.name}</TableCell>
-                <TableCell>{element.code}</TableCell>
-                <TableCell>{element.revision}</TableCell>
+                <TableCell>{element.languagename}</TableCell>
+                <TableCell>{element.versionname}</TableCell>
+                <TableCell>{element.versioncode}</TableCell>
                 <TableCell>
                   <Button
                     onClick={()=>handleDelete(element.id,'Deleted SuccesFuly!!')}
@@ -92,8 +91,8 @@ const TableVersion = () => {
         </Table>
       </TableContainer>
       <Alert />
-    </div>
+      </div>
      );
 }
  
-export default TableVersion;
+export default BibleTable;

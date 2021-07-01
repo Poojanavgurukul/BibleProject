@@ -27,15 +27,15 @@ export default function ResponsiveDialog() {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
         <DialogTitle id="responsive-dialog-title">{"Add Version"}</DialogTitle>
         <DialogContent>
             <AddForm />
         </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

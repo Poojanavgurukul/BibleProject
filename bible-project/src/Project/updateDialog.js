@@ -4,10 +4,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import UpdateForm from '../Language/updateForm';
+import UpdateForm from '../Project/updateForm';
 import { useTheme } from '@material-ui/core/styles';
 import { useContext } from 'react';
-import { CommonContext } from '../../contexts/commonContext';
+import { CommonContext } from '../contexts/commonContext';
 
 export default function ResponsiveDialogBox() {
   const {openDialogBox,setOpenDialogBox} = useContext(CommonContext);
@@ -17,7 +17,6 @@ export default function ResponsiveDialogBox() {
   const handleClose = () => {
     setOpenDialogBox(false)
   }
-
   return (
     <div>
       <Dialog
@@ -26,7 +25,7 @@ export default function ResponsiveDialogBox() {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">{"Add Language"}</DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{"Update Project"}</DialogTitle>
         <DialogContent>
             <UpdateForm />
         </DialogContent>

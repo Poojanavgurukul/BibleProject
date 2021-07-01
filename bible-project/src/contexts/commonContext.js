@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       },
       addBtn:{
           outline:"none",
+          width:"50%",
           background:'#3f51b5',
           padding:'0.5rem',
           border:'none',
@@ -50,7 +51,7 @@ const CommonContextProvider = (props) => {
         setId(id)
         setOpenDialogBox(true);
     };
-     
+    
     return ( 
         <CommonContext.Provider value={
             {
@@ -67,7 +68,8 @@ const CommonContextProvider = (props) => {
                 handleClickedBox,
                 setOpenDialogBox,
                 id,
-                history
+                setId,
+                history,
             }
             }>
             {props.children}

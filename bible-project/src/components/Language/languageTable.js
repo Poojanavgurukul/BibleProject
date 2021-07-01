@@ -14,28 +14,18 @@ import Alert from '../common/Alert'
 import ResponsiveDialog from './DialogLanguageAdd';
 import ResponsiveDialogBox from './upDateDialog';
 
-import { makeStyles } from '@material-ui/core/styles';
 import { LanguageContext } from '../../contexts/language';
 import { CommonContext } from '../../contexts/commonContext';
 
-const useStyles = makeStyles((theme) => ({
-  table: {
-    minWidth: 650,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
-
 const LanguageTable = () => {
-   const classes = useStyles();
    const { isLoading,error,data } = useContext(LanguageContext)
-   const {setOpen,setMessage,handleClicked,handleClickedBox,history} = useContext(CommonContext);
+   const {setOpen,setMessage,handleClicked,handleClickedBox,history,classes} = useContext(CommonContext);
    const handleDelete=(id,message)=>{
       fetch(`http://localhost:8000/language/${id}`,{
         method:'DELETE'
       }).then(()=>{
         history.push('/')
+        window.location.reload()
       })
       setOpen(true);
       setMessage(message);
@@ -63,8 +53,6 @@ const LanguageTable = () => {
               <TableCell>Language Name</TableCell>
               <TableCell>Language Code</TableCell>
               <TableCell>Direction To Read</TableCell>
-              <TableCell>Delete</TableCell>
-              <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

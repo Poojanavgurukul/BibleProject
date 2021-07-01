@@ -14,3 +14,6 @@ code {
 .MuiDialog-container .MuiDialogContent-root{
   padding:20px 24px
 }
+.MuiDialog-paper{
+  width: 100%;
+}

@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 
 export const VersionContext = createContext();
 const VersionContextProvider = (props) => {
-    const { isLoading, error, data} = useQuery('languageData', () =>
-     fetch('http://localhost:3030/version').then(res =>
+    const { isLoading, error, data} = useQuery('versionData', () =>
+     fetch('http://localhost:8000/version').then(res =>
        res.json()
      )
    )

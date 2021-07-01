@@ -10,18 +10,17 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Alert from '../common/Alert';
-import ResponsiveDialogBox from '../Version/updateDialog';
-import ResponsiveDialog from '../Version/DialogVersionAdd';
+import ResponsiveDialogBox from '../Project/updateDialog';
+import ResponsiveDialog from '../Project/DialogVersionAdd';
 
-import { VersionContext } from '../../contexts/version';
-import { CommonContext } from '../../contexts/commonContext';
+import { CommonContext } from '../contexts/commonContext';
+import { ProjectContext } from '../contexts/project';
 
 const TableVersion = () => {
-    const {isLoading,error,data} = useContext(VersionContext);
-    const {classes,handleClicked,setMessage,setOpen,handleClickedBox} = useContext(CommonContext);
+    const {isLoading,error,data} = useContext(ProjectContext);
+    const {classes,handleClickedBox,handleClicked,setMessage,setOpen} = useContext(CommonContext);
     const handleDelete=(id,message)=>{
-      fetch(`http://localhost:8000/version/${id}`,{
+      fetch(`http://localhost:8000/project/${id}`,{
         method:'DELETE'
       }).then(()=>{
         window.location.reload();
@@ -48,10 +47,10 @@ const TableVersion = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Version Id</TableCell>
-              <TableCell>Version Name</TableCell>
-              <TableCell>Version Code</TableCell>
-              <TableCell>Revision</TableCell>
+              <TableCell>Project Id</TableCell>
+              <TableCell>Project Name</TableCell>
+              <TableCell>Target Language</TableCell>
+              <TableCell>Source Language</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -61,8 +60,8 @@ const TableVersion = () => {
                   {element.id}
                 </TableCell>
                 <TableCell>{element.name}</TableCell>
-                <TableCell>{element.code}</TableCell>
-                <TableCell>{element.revision}</TableCell>
+                <TableCell>{element.sourcelanguage}</TableCell>
+                <TableCell>{element.targetlanguage}</TableCell>
                 <TableCell>
                   <Button
                     onClick={()=>handleDelete(element.id,'Deleted SuccesFuly!!')}
@@ -91,7 +90,6 @@ const TableVersion = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Alert />
     </div>
      );
 }
