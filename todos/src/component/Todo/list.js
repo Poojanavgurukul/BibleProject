@@ -1,3 +1,4 @@
+import TextColor from "../../hoc/textColor";
 const TodosList = ({todos,deleteTodo}) => {
     const todoList = todos.length?(
         todos.map((todo)=>(
@@ -21,4 +22,4 @@ const TodosList = ({todos,deleteTodo}) => {
      );
 }
  
-export default TodosList;
+export default TextColor(TodosList);
