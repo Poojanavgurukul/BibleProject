@@ -1,6 +1,8 @@
 import './App.css';
-import { Component } from 'react';
 import TodoList from './component/Todo/list';
+import TodoForm from './component/Todo/Addform';
+import { Component } from 'react';
+
 
 class App extends Component{
   state = {
@@ -10,10 +12,16 @@ class App extends Component{
     ]
   }
   deleteTodo=(id)=>{
-    console.log(id,'I have id')
     const todos=this.state.todos.filter((todo)=>{
       return todo.id !== id
     });
+    this.setState({
+      todos
+    })
+  }
+  addTodo=(todo)=>{
+    todo.id= this.state.todos.length+1
+    let todos= [...this.state.todos,todo]
     this.setState({
       todos
     })
@@ -24,6 +32,7 @@ class App extends Component{
       <h1 className="center blue-text">Todo's</h1>
       <div className="todo-app container">
       <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+      <TodoForm  addTodo={this.addTodo}/>
     </div>
     </div>
   );
