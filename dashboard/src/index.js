@@ -12,22 +12,22 @@ import { createStore, applyMiddleware,compose } from 'redux';
 import { Provider } from 'react-redux'; 
 
 
-const store = createStore(rootReducer,
+const store = createStore(
+  rootReducer,
   compose(applyMiddleware(thunk.withExtraArgument({getFirebase,getFirestore})),
       reduxFirestore(fbConfig),
-      reactReduxFirebase(fbConfig)
+      reactReduxFirebase(fbConfig,{useFirestoreForProfile:true,userProfile:'users',attachAuthIsReady:true})
     )
   )
-ReactDOM.render(
-  <React.StrictMode>
-  <Provider store={store}>
-    <App />
-  </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
+store.firebaseAuthIsReady.then(()=>{
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  );
+  reportWebVitals();
+})
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
